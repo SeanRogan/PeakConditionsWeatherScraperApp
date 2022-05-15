@@ -1,4 +1,4 @@
 package com.seanrogandev.weatherscraper.app.model;
 
-public class MountainRangeModel {
+public class UserProfile {
 }
