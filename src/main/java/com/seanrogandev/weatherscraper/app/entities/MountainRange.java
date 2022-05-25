@@ -1,16 +1,21 @@
-package com.seanrogandev.weatherscraper.app.model;
+package com.seanrogandev.weatherscraper.app.entities;
 
+import lombok.Getter;
+import lombok.Setter;
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "mountain_ranges")
 public class MountainRange {
     @Id //for primary key
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long rangeId;
-
+    @Getter
+    private Long rangeId;
+    @Getter
+    @Setter
     @Column(name = "range_name")
     private String rangeName;
-
+    @Getter
+    @Setter
     @Column(name = "number_of_peaks")
     private int numberOfPeaks;
 
