@@ -1,37 +1,45 @@
 package com.seanrogandev.weatherscraper.app.entities;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import com.sun.istack.NotNull;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity(name = "users")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id //for primary key
-    @Getter
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Getter
-    @Setter
+
     @Column(name = "first_name")
     private String firstName;
-    @Getter
-    @Setter
+
     @Column(name = "last_name")
     private String lastName;
-    @Getter
-    @Setter
+
     @Column (name = "email")
     private String email;
-    @Getter
-    @Setter
+
     @Column (name = "user_name")
     private String userName;
-    @Getter
-    @Setter
+
     @Column (name = "password")
     private String password;
+
+    @Column (name = "wind_max")
+    private Integer maxWindspeed;
+
+    @Column (name = "wind_min")
+    private Integer minWindspeed;
+
+    @Column (name = "temp_max")
+    private Integer maxTemp;
+
+    @Column (name = "temp_min")
+    private Integer minTemp;
 
 }
