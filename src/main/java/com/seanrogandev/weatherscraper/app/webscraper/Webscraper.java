@@ -6,14 +6,39 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import javax.print.Doc;
 import java.io.IOException;
 import java.util.*;
 
 public class Webscraper {
     final public String baseUrl = "https://www.mountain-forecast.com";
-
-
-    public List<String[]> getWeatherData(String url) throws IOException {
+    public HashMap<String,String> getAllMountainPeakUrls() throws IOException {
+        //listOfPeakUrls is a Hashmap of mountain peak names(key) and their corresponding uri (value)
+        HashMap<String,String> listOfPeakUrls = new HashMap<>();
+        //document map contains the pages a-z containing
+        // all the links of all mountain peaks (over 1000ft) in the USA
+        Map<Character, Document> documentMap = new HashMap<>();
+        //iterating through the integer values 65-90 which will be cast to A-Z characters
+        // via their ascii values. then using the characters to fill in the variable in the uri.
+        for(int i = 65; i <= 90; i++ ) {
+        char c = (char)i;
+        String uri = String.format(baseUrl + "/countries/United-States/locations/%c" , c);
+        documentMap.put(c, Jsoup.connect(uri).get());
+        }
+    Iterator<Document> itr = documentMap.values().iterator();
+        while(itr.hasNext()) {
+            Document current = itr.next();
+            Elements elements = current.getElementsByClass("b-list-table__item").select("a");
+            Iterator<Element> eItr = elements.iterator();
+            while (eItr.hasNext()) {
+                Element currentElement = eItr.next();
+                System.out.println(currentElement.text());
+                listOfPeakUrls.put(currentElement.text() , currentElement.select("a[href]").attr("href"));
+            }
+        }
+    return listOfPeakUrls;
+    }
+    public List<String[]> getWeatherData(String uri) throws IOException {
         List<String[]> dataList = new ArrayList<>();
         String weatherConditionsRow = "forecast__table-summary";
         String maxTempRow = "forecast__table-max-temperature";
@@ -22,7 +47,7 @@ public class Webscraper {
         String rainFallRow = "forecast__table-rain";
         String snowFallRow = "forecast__table-snow";
         String windRow = "forecast__table-wind";
-        Document doc = Jsoup.connect(url).get();
+        Document doc = Jsoup.connect(uri).get();
 
 
         //get high temps
@@ -68,6 +93,7 @@ public class Webscraper {
                 .select("tr.forecast__table-wind");
         dataList.add(getWindConditions(windElements.select("td.iconcell").iterator()));
 
+        //returns arrayList of String arrays containing
         return dataList;
     }
 
@@ -76,8 +102,8 @@ public class Webscraper {
         int counter = 0;
 
         while(itr.hasNext()) {
-            Element currentElement = itr.next();
-            result[counter] = currentElement.text();
+            Element current = itr.next();
+            result[counter] = current.text();
             counter++;
         }
 
@@ -90,9 +116,9 @@ public class Webscraper {
         int counter = 0;
 
         while(itr.hasNext()) {
-            Element currentElement = itr.next();
-            String windspeed = currentElement.select("text.wind-icon__val").text();
-            String windDirection = currentElement.select("div.wind-icon__tooltip").text();
+            Element current = itr.next();
+            String windspeed = current.select("text.wind-icon__val").text();
+            String windDirection = current.select("div.wind-icon__tooltip").text();
             result[counter] = windspeed + " " + windDirection;
             counter++;
         }

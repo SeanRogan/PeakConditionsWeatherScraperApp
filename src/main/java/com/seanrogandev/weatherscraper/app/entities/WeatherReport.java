@@ -1,14 +1,15 @@
 package com.seanrogandev.weatherscraper.app.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.seanrogandev.weatherscraper.app.model.WeatherConditions;
+import com.seanrogandev.weatherscraper.app.model.WeatherReportTimeOfDay;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Time;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class WeatherReport {
@@ -24,5 +25,6 @@ public class WeatherReport {
     private float expectedSnowfall;
     private String windDirection;
     private String weatherConditions;
+    private WeatherReportTimeOfDay timeOfDay;
 
 }
