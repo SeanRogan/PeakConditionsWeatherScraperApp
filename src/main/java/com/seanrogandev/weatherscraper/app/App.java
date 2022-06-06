@@ -9,10 +9,8 @@ import java.io.IOException;
 @SpringBootApplication
 public class App {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		SpringApplication.run(App.class, args);
-		DataScraper w = new DataScraper();
-		w.getAllMountainPeakUrls();
 	}
 
 }

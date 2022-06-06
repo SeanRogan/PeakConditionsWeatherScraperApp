@@ -1,5 +1,5 @@
 package com.seanrogandev.weatherscraper.app.webscraper;
 
-public class DataFormater {
+public class DataService {
 
 }

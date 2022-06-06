@@ -4,9 +4,6 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity(name = "users")
-@Table(indexes = {
-        @Index(name = "idx_user_profile_id", columnList = "profile_id")
-})
 @Getter
 @Setter
 @AllArgsConstructor
@@ -18,8 +15,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_id",referencedColumnName = "owner")
+    @OneToOne(mappedBy = "user" ,
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
     private UserProfile profile;
 
 
