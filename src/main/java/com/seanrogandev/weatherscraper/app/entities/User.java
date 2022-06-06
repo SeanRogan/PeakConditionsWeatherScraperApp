@@ -1,10 +1,12 @@
 package com.seanrogandev.weatherscraper.app.entities;
-import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
 
 @Entity(name = "users")
+@Table(indexes = {
+        @Index(name = "idx_user_profile_id", columnList = "profile_id")
+})
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,6 +17,11 @@ public class User {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profile_id",referencedColumnName = "owner")
+    private UserProfile profile;
+
 
     @Column(name = "first_name")
     private String firstName;
@@ -28,8 +35,13 @@ public class User {
     @Column (name = "user_name")
     private String userName;
 
+    //TODO IMPLEMENT ENCRYPTION/SECURITY
+    // need to convert passwords to its hash
+    // on registration and store that in the DB, along with a salt for each user
+    // not their actual password. Then on Login hash their password input and compare the two
+
     @Column (name = "password")
-    private String password;
+    private String passwordHash;
 
     @Column (name = "wind_max")
     private Integer maxWindspeed;
@@ -42,5 +54,9 @@ public class User {
 
     @Column (name = "temp_min")
     private Integer minTemp;
+
+
+
+
 
 }

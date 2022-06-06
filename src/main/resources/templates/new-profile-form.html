@@ -1,5 +1,5 @@
 
-<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<html xmlns:th="https://thymeleaf.org" lang="en">
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
@@ -7,19 +7,41 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users Demo</title>
+    <title>Your Profile</title>
 
     <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 
 </head>
 <body>
 <div class="container">
+<form th:action="@{/register/create-profile}" th:object="${userProfile}" method="POST">
+    <!--Max windspeed-->
+    <label for="maxwind">Select the highest winds you wish to encounter</label>
+    <select id="maxwind" name="maxWindSpeed">
+        <input th:field="*{maxWindSpeed}" type="number" step="5" name="quantity" min="0" max="80"/>
+        <input type="submit" value="Submit" class="btn btn-primary"/>
+    </select>
+    <!--min temperature-->
+    <label for="minTemp">Select the coldest temperature you wish to encounter</label>
+    <select id="minTemp" name="minTempPreference">
+        <input th:field="*{minTempPreference}" type="number" name="quantity" min="-10" max="110"/>
+        <input type="submit" value="Submit" class="btn btn-primary"/>
+    </select>
 
+    <!--max temperature-->
+    <label for="maxTemp">Select the coldest temperature you wish to encounter</label>
+    <select id="maxTemp" name="maxTempPreference">
+        <input th:field="*{maxTempPreference}" type="number" name="quantity" min="-10" max="110"/>
+        <input type="submit" value="Submit" class="btn btn-primary"/>
+    </select>
+</form>
     <!--
     All Pages need a nav bar, with a sign out/sign in, a browse mountains section,
     also an about us, a donate section, and a dev section to describe how to call the API
     The user profile needs a home section/section to view weather alerts, a section to view profile, a section to edit profile info.
     -->
+
+
 </div>
 </body>
 </html>

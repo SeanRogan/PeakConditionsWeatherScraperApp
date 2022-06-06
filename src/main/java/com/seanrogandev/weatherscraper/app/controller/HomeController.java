@@ -6,7 +6,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class HomeController {
-
     @GetMapping({"/","/home"})
     ModelAndView homeView() {
         ModelAndView mav = new ModelAndView("home-view");

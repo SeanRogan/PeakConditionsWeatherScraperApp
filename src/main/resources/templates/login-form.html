@@ -14,7 +14,14 @@
 </head>
 <body>
 <div class="container">
+    <h2>Login to your Account</h2>
+    <form th:action="@{/login}" th:object="${user}" method="POST">
+        <input type="text" th:field="*{email}" placeholder="Enter Your Email" class="form-control col-4 mb-4"/>
+        <input type="text" th:field="*{passwordHash}" placeholder="Choose A Password" class="form-control col-4 mb-4"/>
 
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a th:href="@{/register}" class="btn btn-primary">New User? Register New Accounts Here.</a>
+    </form>
 </div>
 </body>
 </html>

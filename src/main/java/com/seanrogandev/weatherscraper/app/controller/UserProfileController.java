@@ -1,29 +1,55 @@
 package com.seanrogandev.weatherscraper.app.controller;
 
 import com.seanrogandev.weatherscraper.app.entities.User;
+import com.seanrogandev.weatherscraper.app.entities.UserProfile;
 import com.seanrogandev.weatherscraper.app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.w3c.dom.html.HTMLTableCaptionElement;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.net.HttpCookie;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+@Controller
 public class UserProfileController {
     @Autowired
     private UserRepository repo;
     @GetMapping("/profile")
-    ModelAndView returnProfileView() {
-        ModelAndView mav = new ModelAndView("registration-form");
-        mav.addObject("user", new User());
+    ModelAndView returnProfileView(
+            @ModelAttribute(name = "profile")
+            UserProfile profile,
+            HttpServletRequest req) {
+        ModelAndView mav = new ModelAndView("profile-view");
+        for(Cookie cookies : req.getCookies()){
+            if(cookies.getName().equals("userId")){
+                mav.addObject("userProfile", repo.getById(Long.valueOf(cookies.getValue())));
+            }
+        }
         return mav;
     }
-    @PostMapping("/register")
-    String createNewProfile(@ModelAttribute User userData) {
+    @GetMapping("register/create-profile")
+    ModelAndView getCreateProfileView() {
+        ModelAndView mav = new ModelAndView("new-profile-form");
+        mav.addObject("userProfile" , new UserProfile());
+        return mav;
+    }
+    @PostMapping("register/create-profile")
+    String createNewProfile(@ModelAttribute(name = "user") User userData, HttpServletResponse res) {
         //save the new user data to the user repository
+        res.addCookie(new Cookie("userId",String.valueOf(userData.getId())));
         repo.save(userData);
         //redirect the user to their profile
-        return "redirect:/";
+        return "redirect:/profile";
         //need fav weather,
     }
+
+
 }
 
