@@ -9,14 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.w3c.dom.html.HTMLTableCaptionElement;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.net.HttpCookie;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
+
 @Controller
 public class UserProfileController {
     @Autowired

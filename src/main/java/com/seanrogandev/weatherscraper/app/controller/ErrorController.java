@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class ErrorController {
 
     @GetMapping("/error")
-    ModelAndView homeView() {
+    ModelAndView getErrorView() {
         ModelAndView mav = new ModelAndView("error-page-view");
         return mav;
     }
