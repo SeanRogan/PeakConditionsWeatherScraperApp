@@ -66,6 +66,7 @@ public class DataService {
         Document doc = ds.scrapeDocument(uri);
 
         if(doc != null) {
+
             //get high temps
             Elements maxTempElements = doc.getElementsByClass(maxTempRow)
                     .select("span.temp");
@@ -76,12 +77,10 @@ public class DataService {
                     .select("span.temp");
             dataList.add(collectToArray(minTempElements.iterator()));
 
-
             //get windchill temps
             Elements windChillElements = doc.getElementsByClass(windChillRow)
                     .select("span.temp");
             dataList.add(collectToArray(windChillElements.iterator()));
-
 
             //get snowfall
             Elements snowFallElements = doc.getElementsByClass(snowFallRow)
@@ -89,26 +88,23 @@ public class DataService {
                     .select("span.snow");
             dataList.add(collectToArray(snowFallElements.iterator()));
 
-
             //get rainfall
             Elements rainFallElements = doc.getElementsByClass(rainFallRow)
                     .select("td.forecast__table-relative")
                     .select("span.rain");
             dataList.add(collectToArray(rainFallElements.iterator()));
 
-
             //get weather elements
             Elements weatherConditionElements = doc.getElementsByClass(weatherConditionsRow)
                     .select("td");
             dataList.add(collectToArray(weatherConditionElements.iterator()));
-
 
             //get wind elements
             Elements windElements = doc.getElementsByClass(windRow)
                     .select("tr.forecast__table-wind");
             dataList.add(getWindConditions(windElements.select("td.iconcell").iterator()));
         }
-        //returns arrayList of String arrays containing
+
         return dataList;
     }
 
@@ -133,7 +129,7 @@ public class DataService {
             Element current = itr.next();
             String windspeed = current.select("text.wind-icon__val").text();
             String windDirection = current.select("div.wind-icon__tooltip").text();
-            result[counter] = windspeed + " " + windDirection;
+            result[counter] = "Wind Conditions : " + windspeed + " " + windDirection;
             counter++;
         }
 

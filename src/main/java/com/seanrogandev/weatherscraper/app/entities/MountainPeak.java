@@ -2,7 +2,6 @@ package com.seanrogandev.weatherscraper.app.entities;
 
 import lombok.*;
 import org.hibernate.Hibernate;
-
 import javax.persistence.*;
 import java.util.Objects;
 

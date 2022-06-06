@@ -69,10 +69,4 @@ public class UserLoginController {
         mav.addObject("user" ,new User());
         return mav;
     }
-
-    @GetMapping("/error")
-    ModelAndView getErrorView() {
-        ModelAndView mav = new ModelAndView("error-page-view");
-        return mav;
-    }
 }

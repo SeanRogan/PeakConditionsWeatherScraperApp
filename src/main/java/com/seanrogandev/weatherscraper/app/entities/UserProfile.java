@@ -24,11 +24,11 @@ public class UserProfile {
         @MapsId
         private User user;
 
-
-        private Integer maxWindSpeed;
+        private Integer maxWindSpeedPreference;
         private Integer maxTempPreference;
         private Integer minTempPreference;
-        private Enum<WeatherConditions> weatherConditionPreference;
+        @Enumerated(EnumType.STRING)
+        private WeatherConditions weatherConditionPreference;
 
 
 
