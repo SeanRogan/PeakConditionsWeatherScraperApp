@@ -45,8 +45,14 @@ public class UserProfileController {
         //redirect the user to their profile
         return "redirect:/profile";
         //need fav weather,
+
     }
 
+    @GetMapping("/error")
+    ModelAndView getErrorView() {
+        ModelAndView mav = new ModelAndView("error-page-view");
+        return mav;
+    }
 
 }
 

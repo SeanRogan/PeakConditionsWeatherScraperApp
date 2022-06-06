@@ -12,6 +12,10 @@ public class HomeController {
         return mav;
     }
 
-
+    @GetMapping("/error")
+    ModelAndView getErrorView() {
+        ModelAndView mav = new ModelAndView("error-page-view");
+        return mav;
+    }
 
 }

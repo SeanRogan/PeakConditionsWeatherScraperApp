@@ -36,5 +36,10 @@ public class UserRegistrationController {
     return "redirect:/register/create-profile";
 
     }
+    @GetMapping("/error")
+    ModelAndView getErrorView() {
+        ModelAndView mav = new ModelAndView("error-page-view");
+        return mav;
+    }
 }
 
