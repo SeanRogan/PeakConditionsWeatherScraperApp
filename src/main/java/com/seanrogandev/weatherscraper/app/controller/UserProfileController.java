@@ -16,8 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class UserProfileController {
+
+    final private UserRepository repo;
     @Autowired
-    private UserRepository repo;
+    UserProfileController(UserRepository repo) {
+        this.repo = repo;
+    }
     @GetMapping("/profile")
     ModelAndView returnProfileView(
             @ModelAttribute(name = "profile")

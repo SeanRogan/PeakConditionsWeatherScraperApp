@@ -32,9 +32,10 @@ public class UserLoginController {
 
     /**
      * login method
-     * @param user
-     * @param model
-     * @param response
+     *
+     * @param user the user object
+     * @param model the page model
+     * @param response the HttpServletResponse
      * @return returns a String, "home" or "login" either the home view
      */
 

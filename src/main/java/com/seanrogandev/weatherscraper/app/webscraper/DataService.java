@@ -1,6 +1,7 @@
 package com.seanrogandev.weatherscraper.app.webscraper;
 
 import com.seanrogandev.weatherscraper.app.entities.MountainPeak;
+import com.seanrogandev.weatherscraper.app.entities.MountainRange;
 import com.seanrogandev.weatherscraper.app.repository.MountainPeakRepository;
 import com.seanrogandev.weatherscraper.app.repository.MountainRangeRepository;
 import org.jsoup.nodes.Document;
@@ -14,16 +15,28 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
+@Service
 public class DataService {
-    MountainPeakRepository peakRepo;
 
+    MountainPeakRepository peakRepo;
+    MountainRangeRepository rangeRepo;
     final DataScraper ds = new DataScraper();
     final public String baseUrl = "https://www.mountain-forecast.com";
 
     public HashMap<String,String> getAllMountainRangeUrls() {
         HashMap<String,String> listOfRangeUrls = new HashMap<>();
-        String range = baseUrl + "/mountain_ranges";
+        String rangesUri = baseUrl + "/mountain_ranges";
+        Document allRanges = ds.scrapeDocument(rangesUri);
+        Elements elements = allRanges
+                .getElementsByClass("b-list-table__item-name--ranges")
+                .select("a[href]");
+            for(Element e : elements) {
+                listOfRangeUrls.put(e.text(),e.attr("href"));
+                rangeRepo.save(new MountainRange(e.text(),
+                        rangesUri + e.attr("href")));
+            }
+
+
         //todo build out to get list of name/url pairs
         return listOfRangeUrls;
     }

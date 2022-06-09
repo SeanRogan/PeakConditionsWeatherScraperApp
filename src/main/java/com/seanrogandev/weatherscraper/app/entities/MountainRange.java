@@ -17,9 +17,11 @@ public class MountainRange {
     @Column(name = "range_name")
     private String rangeName;
 
-    @Column(name = "number_of_peaks" )
-    private int numberOfPeaks;
+    @Column(name = "uri")
+    private String uri;
 
-
-
+    public MountainRange(String rangeName, String uri) {
+        this.rangeName = rangeName;
+        this.uri = uri;
+    }
 }
