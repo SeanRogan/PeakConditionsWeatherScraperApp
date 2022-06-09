@@ -12,6 +12,11 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MountainPeak {
+
+    public MountainPeak(String peakName, String uri ){
+        this.peakName = peakName;
+        this.uri = uri;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "peak_id")
@@ -20,17 +25,13 @@ public class MountainPeak {
     @Column(name = "peak_name")
     private String peakName;
 
-    @Column(name = "elevation")
-    private int elevation;
-
     @Column(name = "home_state")
     private String homeState;
 
     @JoinColumn(name = "range_id")
     private Long rangeId;
 
-    @Column(name = "day_hike_friendly")
-    private boolean dayHikeFriendly;
+    private String uri;
 
     @Override
     public boolean equals(Object o) {

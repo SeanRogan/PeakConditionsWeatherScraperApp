@@ -1,8 +1,13 @@
 package com.seanrogandev.weatherscraper.app.webscraper;
 
+import com.seanrogandev.weatherscraper.app.entities.MountainPeak;
+import com.seanrogandev.weatherscraper.app.repository.MountainPeakRepository;
+import com.seanrogandev.weatherscraper.app.repository.MountainRangeRepository;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,9 +16,17 @@ import java.util.List;
 import java.util.Map;
 
 public class DataService {
+    MountainPeakRepository peakRepo;
+
     final DataScraper ds = new DataScraper();
     final public String baseUrl = "https://www.mountain-forecast.com";
 
+    public HashMap<String,String> getAllMountainRangeUrls() {
+        HashMap<String,String> listOfRangeUrls = new HashMap<>();
+        String range = baseUrl + "/mountain_ranges";
+        //todo build out to get list of name/url pairs
+        return listOfRangeUrls;
+    }
 
     public HashMap<String,String> getAllMountainPeakUrls() {
         //listOfPeakUrls is a Hashmap of mountain peak names(key) and their corresponding uri (value)
@@ -30,14 +43,18 @@ public class DataService {
             String uri = String.format(baseUrl + "/countries/United-States/locations/%c" , c);
             documentMap.put(c, ds.scrapeDocument(uri));
         }
-        Iterator<Document> itr = documentMap.values().iterator();
-        while(itr.hasNext()) {
-            Document current = itr.next();
+
+        for (Document current : documentMap.values()) {
             Elements elements = current.getElementsByClass("b-list-table__item").select("a");
-            Iterator<Element> eItr = elements.iterator();
-            while (eItr.hasNext()) {
-                Element currentElement = eItr.next();
-                listOfPeakUrls.put(currentElement.text() , currentElement.select("a[href]").attr("href"));
+            for (Element currentElement : elements) {
+                listOfPeakUrls.put(currentElement.text(),
+                        currentElement
+                                .select("a[href]")
+                                .attr("href"));
+                peakRepo.save(new MountainPeak(currentElement.text(),
+                        currentElement
+                                .select("a[href]")
+                                .attr("href")));
             }
         }
         return listOfPeakUrls;

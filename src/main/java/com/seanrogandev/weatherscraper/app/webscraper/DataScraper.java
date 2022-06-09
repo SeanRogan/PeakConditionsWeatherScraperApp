@@ -10,8 +10,7 @@ public class DataScraper {
 
     public Document scrapeDocument(String uri) {
         try {
-           Document result = Jsoup.connect(uri).get();
-           return result;
+           return Jsoup.connect(uri).get();
         } catch (IOException e)
         {
         //todo fill catch block
