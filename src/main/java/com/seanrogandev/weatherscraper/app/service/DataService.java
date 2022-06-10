@@ -39,23 +39,23 @@ public class DataService {
     final public String baseUrl = "https://www.mountain-forecast.com";
 
 
+    public HashMap<String,String> getAllSubRanges() {
+        HashMap<String,String> subRangeUrls = new HashMap<>();
 
-    public HashMap<String,String> getAllMountainRangeUrls() {
-        HashMap<String,String> listOfRangeUrls = new HashMap<>();
-        String rangesUri = baseUrl + "/mountain_ranges";
-        Document allRanges = ds.scrapeDocument(rangesUri);
+        return subRangeUrls;
+    }
+    public HashMap<String,String> getAllMajorMountainRangeUrls() {
+        HashMap<String,String> rangeUrls = new HashMap<>();
+        String uri = baseUrl + "/mountain_ranges";
+        Document allRanges = ds.scrapeDocument(uri);
         Elements elements = allRanges
                 .getElementsByClass("b-list-table__item-name--ranges")
                 .select("a[href]");
         for(Element e : elements) {
-            listOfRangeUrls.put(e.text(),e.attr("href"));
-            rangeRepo.save(new MountainRange(e.text(),
-                    rangesUri + e.attr("href")));
+            rangeUrls.put(e.text(),e.attr("href"));
+
         }
-
-
-        //todo build out to get list of name/url pairs
-        return listOfRangeUrls;
+        return rangeUrls;
     }
 
     public HashMap<String,String> getAllMountainPeakUrls() {

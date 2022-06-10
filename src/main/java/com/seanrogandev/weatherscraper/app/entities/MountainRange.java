@@ -1,13 +1,15 @@
 package com.seanrogandev.weatherscraper.app.entities;
 
 import lombok.*;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
 
 @Entity(name = "mountain_ranges")
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class MountainRange {
     @Id //for primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
