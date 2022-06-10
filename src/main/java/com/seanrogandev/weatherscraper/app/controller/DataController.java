@@ -1,4 +1,4 @@
-package com.seanrogandev.weatherscraper.app.webscraper;
+package com.seanrogandev.weatherscraper.app.controller;
 
 import com.seanrogandev.weatherscraper.app.entities.MountainPeak;
 import com.seanrogandev.weatherscraper.app.repository.MountainPeakRepository;

@@ -1,9 +1,10 @@
-package com.seanrogandev.weatherscraper.app.webscraper;
+package com.seanrogandev.weatherscraper.app.service;
 
 import com.seanrogandev.weatherscraper.app.entities.MountainPeak;
 import com.seanrogandev.weatherscraper.app.entities.MountainRange;
 import com.seanrogandev.weatherscraper.app.repository.MountainPeakRepository;
 import com.seanrogandev.weatherscraper.app.repository.MountainRangeRepository;
+import com.seanrogandev.weatherscraper.app.webscraper.DataScraper;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -15,13 +16,29 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+/**
+ * DataService contains business logic to process webscraped data and
+ */
 @Service
 public class DataService {
-
+    /**
+     *
+     * @param peakRepo
+     * @param rangeRepo
+     */
+    @Autowired
+    public DataService(MountainPeakRepository peakRepo, MountainRangeRepository rangeRepo) {
+        this.peakRepo = peakRepo;
+        this.rangeRepo = rangeRepo;
+    }
+    public DataService() {}
     MountainPeakRepository peakRepo;
     MountainRangeRepository rangeRepo;
     final DataScraper ds = new DataScraper();
     final public String baseUrl = "https://www.mountain-forecast.com";
+
+
 
     public HashMap<String,String> getAllMountainRangeUrls() {
         HashMap<String,String> listOfRangeUrls = new HashMap<>();
@@ -30,11 +47,11 @@ public class DataService {
         Elements elements = allRanges
                 .getElementsByClass("b-list-table__item-name--ranges")
                 .select("a[href]");
-            for(Element e : elements) {
-                listOfRangeUrls.put(e.text(),e.attr("href"));
-                rangeRepo.save(new MountainRange(e.text(),
-                        rangesUri + e.attr("href")));
-            }
+        for(Element e : elements) {
+            listOfRangeUrls.put(e.text(),e.attr("href"));
+            rangeRepo.save(new MountainRange(e.text(),
+                    rangesUri + e.attr("href")));
+        }
 
 
         //todo build out to get list of name/url pairs

@@ -1,15 +1,15 @@
 package com.seanrogandev.weatherscraper.app.webscraper;
 
 
+import com.seanrogandev.weatherscraper.app.service.DataService;
 import lombok.Data;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 @Data
-public class ScrapeController {
+public class ScrapeScheduler {
 
     //todo im not sure this should be scheduled,
     // populating the DB, maybe just have it be a pure detatched API,
