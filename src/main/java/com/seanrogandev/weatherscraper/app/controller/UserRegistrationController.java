@@ -28,10 +28,5 @@ public class UserRegistrationController {
     String registerNewUser(@ModelAttribute User userData , HttpServletResponse res) {
        return registrationService.registerNewUser(userData,res);
     }
-    @GetMapping("/error")
-    ModelAndView getErrorView() {
-        ModelAndView mav = new ModelAndView("error-page-view");
-        return mav;
-    }
 }
 

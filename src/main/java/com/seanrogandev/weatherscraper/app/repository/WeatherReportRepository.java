@@ -10,7 +10,5 @@ import java.util.List;
 @Repository
 public interface WeatherReportRepository extends JpaRepository<WeatherReport, Long> {
 
-    @Query("SELECT report FROM weather_report report WHERE peakId = ?1 AND ")
-    List<WeatherReport> getWeatherReportByPeakId(Long peakId);
 
     }
