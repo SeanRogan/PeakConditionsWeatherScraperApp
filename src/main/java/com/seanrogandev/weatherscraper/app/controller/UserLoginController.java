@@ -35,8 +35,7 @@ public class UserLoginController {
     @PostMapping("/login")
     public String login(@ModelAttribute(name = "user") User user,
                         Model model, final HttpServletResponse response) {
-        String redirect = loginService.login(user, model, response);
-        return redirect;
+        return loginService.login(user, model, response);
     }
 
     /**

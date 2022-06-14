@@ -16,9 +16,5 @@ public class DataScraper {
         //todo fill catch block
         }
         return null;
-
     }
-
-
-
 }

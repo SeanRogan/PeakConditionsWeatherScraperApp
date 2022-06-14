@@ -53,7 +53,7 @@ public class DataService {
                 .select("a[href]");
         for(Element e : elements) {
             rangeUrls.put(e.text(),e.attr("href"));
-
+            e.remove();
         }
         return rangeUrls;
     }
